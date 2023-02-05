@@ -1,30 +1,63 @@
+import clsx from 'clsx';
 import {
   ComponentProps,
   FormEventHandler,
   forwardRef,
   KeyboardEventHandler,
-  useReducer,
+  KeyboardEvent,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { actions } from '../store';
 
-export function AddCard() {
+interface Props {
+  fromInput: string;
+  setFromInput: (value: string) => void;
+}
+
+export function AddCard({ fromInput, setFromInput }: Props) {
   const submitRef = useRef<HTMLButtonElement>(null);
   const fromRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState(1);
   const addMore = () => setInputs((s) => s + 1);
+  const adding = useRef<number>();
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+  const focusTropeInput = (key: number) => {
+    const inputs = document.querySelectorAll('input[name^="to."') as NodeListOf<HTMLInputElement>;
+    Array.from(inputs).at(key)?.focus();
+  };
+
+  const handleEnterKey = (event: KeyboardEvent<HTMLInputElement>, callback: () => void) => {
     if (event.key === 'Enter') {
       if (event.ctrlKey) {
         submitRef.current?.click();
       } else {
         event.preventDefault();
-        addMore();
+        callback();
       }
     }
   };
+
+  const handleFromInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    handleEnterKey(event, () => {
+      focusTropeInput(0);
+    });
+  };
+
+  const handleTropeInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    handleEnterKey(event, () => {
+      adding.current = inputs;
+      addMore();
+    });
+  };
+
+  useLayoutEffect(() => {
+    if (adding.current) {
+      focusTropeInput(adding.current);
+      adding.current = undefined;
+    }
+  }, [inputs]);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -33,21 +66,48 @@ export function AddCard() {
 
     if (!from) return;
 
-    const to = Array.from(data.entries()).reduce<string[]>((acc, [key, value]) => {
-      if (key.match(/^to\.\d+/) && (value as string).trim())
-        return acc.concat((value as string).trim());
-      return acc;
-    }, []);
+    const to = Array.from(data.entries()).reduce<{ id: string; description: string }[]>(
+      (acc, [key, _value]) => {
+        const id = key.match(/^to\.(\d+)/)?.[1];
+        const value = ((_value as string) ?? '').trim();
 
-    actions.trope.addTropes({ from, to, isSeen: data.get('seen') === 'on' });
+        console.log({ id, value });
 
+        if (id && value) {
+          const description = data.get(`to_desc.${id}`) as string;
+
+          if (description) {
+            return acc.concat({
+              id: value,
+              description,
+            });
+          }
+        }
+        return acc;
+      },
+      [],
+    );
+
+    actions.trope.investigateNewTrope({ from, to, seen: data.get('seen') === 'on' });
+
+    setFromInput('');
     event.currentTarget.reset();
     setInputs(1);
     fromRef.current?.focus();
   };
 
   const tropeInputs = Array.from({ length: inputs }).map((_, index) => {
-    return <Input key={index} name={`to.${index}`} onKeyDown={handleKeyDown} />;
+    return (
+      <div key={index} className="space-x-1">
+        <Input name={`to.${index}`} onKeyDown={handleTropeInputKeyDown} placeholder="id" />
+        <Input
+          name={`to_desc.${index}`}
+          onKeyDown={handleTropeInputKeyDown}
+          placeholder="description"
+          className="w-52"
+        />
+      </div>
+    );
   });
 
   return (
@@ -58,26 +118,39 @@ export function AddCard() {
         <div className="space-y-3">
           <fieldset className="space-y-1">
             <legend className="text-sm">Trope</legend>
-            <Input ref={fromRef} name="from" required />
+            <div className="flex flex-col space-y-1">
+              <Input
+                ref={fromRef}
+                name="from"
+                required
+                value={fromInput}
+                onChange={(event) => setFromInput(event.currentTarget.value)}
+                onKeyDown={handleFromInputKeyDown}
+                placeholder="id"
+              />
+            </div>
           </fieldset>
 
           <fieldset className="space-y-1 flex flex-col items-start">
-            <legend className="text-sm">Leading to…</legend>
+            <div className="self-stretch flex items-center justify-between">
+              <legend className="text-sm">Leading to…</legend>
+              <button
+                onClick={() => addMore()}
+                type="button"
+                className="text-sm font-mono tracking-wide font-bold"
+                tabIndex={-1}
+              >
+                +1
+              </button>
+            </div>
             {tropeInputs}
-            <button
-              onClick={() => addMore()}
-              type="button"
-              className="text-sm font-mono tracking-wide font-bold"
-            >
-              +1
-            </button>
+          </fieldset>
+
+          <fieldset className="space-x-1.5">
+            <input type="checkbox" id="seen" name="seen" defaultChecked />
+            <label htmlFor="seen">Mark as seen</label>
           </fieldset>
         </div>
-
-        <fieldset className="space-x-1.5">
-          <input type="checkbox" id="seen" name="seen" defaultChecked />
-          <label htmlFor="seen">Mark as seen</label>
-        </fieldset>
       </fieldset>
 
       <button
@@ -92,5 +165,10 @@ export function AddCard() {
 }
 
 const Input = forwardRef<HTMLInputElement, ComponentProps<'input'>>((props, ref) => (
-  <input ref={ref} type="text" className="text-slate-900 px-1" {...props} />
+  <input
+    ref={ref}
+    type="text"
+    {...props}
+    className={clsx('text-slate-900 px-1 w-40', props.className)}
+  />
 ));

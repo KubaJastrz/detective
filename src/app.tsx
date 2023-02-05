@@ -1,19 +1,17 @@
 import { TropeList } from './list';
-import { actions, store } from './store';
+import { store } from './store';
 import { Provider as StoreProvider } from 'react-redux';
 import { AddCard } from './add';
 import { TimeTravel } from './time-travel';
-
-actions.trope.addTrope({ from: 'START', to: '#100' });
-actions.trope.addTrope({ from: '#101', to: 'ACT@101' });
-actions.trope.addTrope({ from: '#101', to: '#102' });
-actions.trope.addTrope({ from: 'START', to: '#102' });
+import { useState } from 'react';
 
 export function App() {
+  const [fromInput, setFromInput] = useState('START');
+
   return (
     <StoreProvider store={store}>
-      <AddCard />
-      <TropeList />
+      <AddCard fromInput={fromInput} setFromInput={setFromInput} />
+      <TropeList focusNewTrope={setFromInput} />
       <aside className="fixed bottom-2 left-1">
         <TimeTravel />
       </aside>

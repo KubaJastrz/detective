@@ -1,21 +1,25 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-type CardId = string;
-
 export interface Trope {
-  from: CardId;
-  to: CardId;
+  from: string;
+  to: string;
+}
+
+export interface Card {
+  id: string;
+  seen: boolean;
+  description?: string;
 }
 
 interface TropeState {
-  list: Trope[];
-  seenCards: Record<CardId, boolean>;
+  tropes: Trope[];
+  cardsById: Record<string, Card>;
 }
 
 const initialState: TropeState = {
-  list: [],
-  seenCards: {},
+  tropes: [],
+  cardsById: {},
 };
 
 export const tropeSlice = createSlice({
@@ -23,15 +27,29 @@ export const tropeSlice = createSlice({
   initialState,
   reducers: {
     addTrope(state, action: PayloadAction<Trope>) {
-      state.list.push(action.payload);
+      state.tropes.push(action.payload);
     },
-    addTropes(state, action: PayloadAction<{ from: CardId; to: CardId[]; isSeen: boolean }>) {
-      for (const to of action.payload.to) {
-        state.list.push({ from: action.payload.from, to });
+    investigateNewTrope(
+      state,
+      action: PayloadAction<{
+        from: string;
+        to: { id: string; description: string }[];
+        seen: boolean;
+      }>,
+    ) {
+      const { from, to: toList, seen } = action.payload;
+      for (const { id, description } of toList) {
+        state.tropes.push({ from, to: id });
+        state.cardsById[id] = {
+          id: id,
+          description,
+          seen: false,
+        };
       }
-      if (action.payload.isSeen) {
-        state.seenCards[action.payload.from] = true;
-      }
+      state.cardsById[from] = {
+        id: from,
+        seen,
+      };
     },
   },
 });

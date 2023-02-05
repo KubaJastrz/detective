@@ -1,14 +1,13 @@
 import { Fragment, ReactNode } from 'react';
 import { useAppSelector } from '../store';
-
-const listFormatter = new Intl.ListFormat('en-GB', { style: 'long', type: 'conjunction' });
+import { TropeItem } from './trope-item';
 
 function useAvailableTropes() {
-  const list = useAppSelector((state) => state.trope.present.list);
-  const seenCards = useAppSelector((state) => state.trope.present.seenCards);
+  const list = useAppSelector((state) => state.trope.present.tropes);
+  const cards = useAppSelector((state) => state.trope.present.cardsById);
 
   const record = list.reduce<Record<string, string[]>>((acc, cur) => {
-    const seen = !!seenCards[cur.to];
+    const seen = !!cards[cur.to]?.seen;
     if (!seen) {
       acc[cur.to] = (acc[cur.to] ?? []).concat(cur.from);
     }
@@ -16,30 +15,24 @@ function useAvailableTropes() {
   }, {});
 
   return Object.entries(record).map(([to, from]) => {
-    return { to, from };
+    return { to, from, description: cards[to].description };
   });
 }
 
-export function TropeList() {
+interface Props {
+  focusNewTrope: (cardId: string) => void;
+}
+
+export function TropeList({ focusNewTrope }: Props) {
   const tropes = useAvailableTropes();
+  if (!tropes.length) {
+    return <p className="px-4 py-2">Add more tropes above ⬆️</p>;
+  }
   return (
     <ul className="px-4 py-2">
-      {tropes.map(({ from, to }) => {
-        const conjunction = listFormatter.formatToParts(from);
-        return (
-          <li key={to} id={to} className="list-disc list-inside">
-            <Em>{to}</Em> is available from{' '}
-            {conjunction.map(({ type, value }, index) => {
-              if (type === 'element') return <Em key={index}>{value}</Em>;
-              return <Fragment key={index}>{value}</Fragment>;
-            })}
-          </li>
-        );
+      {tropes.map((trope) => {
+        return <TropeItem trope={trope} key={trope.to} focusNewTrope={focusNewTrope} />;
       })}
     </ul>
   );
 }
-
-const Em = ({ children }: { children: ReactNode }) => (
-  <em className="not-italic font-semibold font-mono tracking-wide text-lg">{children}</em>
-);
