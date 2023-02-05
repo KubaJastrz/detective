@@ -71,8 +71,6 @@ export function AddCard({ fromInput, setFromInput }: Props) {
         const id = key.match(/^to\.(\d+)/)?.[1];
         const value = ((_value as string) ?? '').trim();
 
-        console.log({ id, value });
-
         if (id && value) {
           const description = data.get(`to_desc.${id}`) as string;
 
