@@ -39,7 +39,7 @@ export function AddCard() {
       return acc;
     }, []);
 
-    actions.trope.addTropes({ from, to });
+    actions.trope.addTropes({ from, to, isSeen: data.get('seen') === 'on' });
 
     event.currentTarget.reset();
     setInputs(1);
@@ -73,6 +73,11 @@ export function AddCard() {
             </button>
           </fieldset>
         </div>
+
+        <fieldset className="space-x-1.5">
+          <input type="checkbox" id="seen" name="seen" defaultChecked />
+          <label htmlFor="seen">Mark as seen</label>
+        </fieldset>
       </fieldset>
 
       <button
