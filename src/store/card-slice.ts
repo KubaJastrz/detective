@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface Trope {
+export interface Lead {
   from: string;
   to: string;
 }
@@ -12,24 +12,24 @@ export interface Card {
   description?: string;
 }
 
-interface TropeState {
-  tropes: Trope[];
+interface CardState {
+  leads: Lead[];
   cardsById: Record<string, Card>;
 }
 
-const initialState: TropeState = {
-  tropes: [],
+const initialState: CardState = {
+  leads: [],
   cardsById: {},
 };
 
-export const tropeSlice = createSlice({
-  name: 'trope',
+export const cardSlice = createSlice({
+  name: 'lead',
   initialState,
   reducers: {
-    addTrope(state, action: PayloadAction<Trope>) {
-      state.tropes.push(action.payload);
+    addLead(state, action: PayloadAction<Lead>) {
+      state.leads.push(action.payload);
     },
-    investigateNewTrope(
+    investigateNewLead(
       state,
       action: PayloadAction<{
         from: string;
@@ -39,7 +39,7 @@ export const tropeSlice = createSlice({
     ) {
       const { from, to: toList, seen } = action.payload;
       for (const { id, description } of toList) {
-        state.tropes.push({ from, to: id });
+        state.leads.push({ from, to: id });
         state.cardsById[id] = {
           id: id,
           description,

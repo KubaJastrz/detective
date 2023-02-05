@@ -4,12 +4,12 @@ import { Fragment, MouseEventHandler, ReactNode } from 'react';
 const listFormatter = new Intl.ListFormat('en-GB', { style: 'long', type: 'conjunction' });
 
 interface Props {
-  trope: { to: string; description?: string; from: string[] };
-  focusNewTrope: (cardId: string) => void;
+  lead: { to: string; description?: string; from: string[] };
+  focusNewLead: (cardId: string) => void;
 }
 
-export function TropeItem({ trope, focusNewTrope }: Props) {
-  const { from, description, to } = structuredClone(trope) as Props['trope'];
+export function LeadItem({ lead, focusNewLead }: Props) {
+  const { from, description, to } = structuredClone(lead) as Props['lead'];
 
   const conjunction = listFormatter.formatToParts(
     from.sort((a, b) => {
@@ -19,7 +19,7 @@ export function TropeItem({ trope, focusNewTrope }: Props) {
 
   return (
     <li className="list-disc list-inside">
-      <To onClick={() => focusNewTrope(to)} label={description}>
+      <To onClick={() => focusNewLead(to)} label={description}>
         {to}
       </To>{' '}
       is available from{' '}

@@ -1,14 +1,14 @@
 import { actions, useAppSelector } from '../store';
 
 export function TimeTravel() {
-  const total = useAppSelector((state) => state.trope.limit || 0);
-  const index = useAppSelector((state) => state.trope.index || 0);
-  const canUndo = useAppSelector((state) => state.trope.past.length > 0);
-  const canRedo = useAppSelector((state) => state.trope.future.length > 0);
+  const total = useAppSelector((state) => state.card.limit || 0);
+  const index = useAppSelector((state) => state.card.index || 0);
+  const canUndo = useAppSelector((state) => state.card.past.length > 0);
+  const canRedo = useAppSelector((state) => state.card.future.length > 0);
 
   return (
     <fieldset className="flex items-center">
-      <button type="button" disabled={!canUndo} onClick={() => actions.trope.undo()}>
+      <button type="button" disabled={!canUndo} onClick={() => actions.card.undo()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -27,7 +27,7 @@ export function TimeTravel() {
 
       <input type="range" min={0} max={total - 1} value={index} readOnly className="w-60" />
 
-      <button type="button" disabled={!canRedo} onClick={() => actions.trope.redo()}>
+      <button type="button" disabled={!canRedo} onClick={() => actions.card.redo()}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

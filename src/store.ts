@@ -3,11 +3,11 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import { useSelector } from 'react-redux';
 import undoable, { ActionCreators as UndoActionCreators } from 'redux-undo';
 
-import { tropeSlice } from './store/trope-slice';
+import { cardSlice } from './store/card-slice';
 
 export const store = configureStore({
   reducer: {
-    trope: undoable(tropeSlice.reducer),
+    card: undoable(cardSlice.reducer),
   },
 });
 
@@ -18,7 +18,7 @@ const undoableActions = {
 };
 
 export const actions = {
-  trope: bindActionCreators({ ...tropeSlice.actions, ...undoableActions }, store.dispatch),
+  card: bindActionCreators({ ...cardSlice.actions, ...undoableActions }, store.dispatch),
 };
 
 export type RootState = ReturnType<typeof store.getState>;

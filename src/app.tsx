@@ -1,4 +1,4 @@
-import { TropeList } from './list';
+import { LeadList } from './list';
 import { store } from './store';
 import { Provider as StoreProvider } from 'react-redux';
 import { AddCard } from './add';
@@ -11,7 +11,7 @@ export function App() {
   return (
     <StoreProvider store={store}>
       <AddCard fromInput={fromInput} setFromInput={setFromInput} />
-      <TropeList focusNewTrope={setFromInput} />
+      <LeadList focusNewLead={setFromInput} />
       <aside className="fixed bottom-2 left-1">
         <TimeTravel />
       </aside>

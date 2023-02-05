@@ -23,7 +23,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
   const addMore = () => setInputs((s) => s + 1);
   const adding = useRef<number>();
 
-  const focusTropeInput = (key: number) => {
+  const focusLeadInput = (key: number) => {
     const inputs = document.querySelectorAll('input[name^="to."') as NodeListOf<HTMLInputElement>;
     Array.from(inputs).at(key)?.focus();
   };
@@ -41,11 +41,11 @@ export function AddCard({ fromInput, setFromInput }: Props) {
 
   const handleFromInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     handleEnterKey(event, () => {
-      focusTropeInput(0);
+      focusLeadInput(0);
     });
   };
 
-  const handleTropeInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+  const handleLeadInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     handleEnterKey(event, () => {
       adding.current = inputs;
       addMore();
@@ -54,7 +54,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
 
   useLayoutEffect(() => {
     if (adding.current) {
-      focusTropeInput(adding.current);
+      focusLeadInput(adding.current);
       adding.current = undefined;
     }
   }, [inputs]);
@@ -88,7 +88,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
       [],
     );
 
-    actions.trope.investigateNewTrope({ from, to, seen: data.get('seen') === 'on' });
+    actions.card.investigateNewLead({ from, to, seen: data.get('seen') === 'on' });
 
     setFromInput('');
     event.currentTarget.reset();
@@ -96,13 +96,13 @@ export function AddCard({ fromInput, setFromInput }: Props) {
     fromRef.current?.focus();
   };
 
-  const tropeInputs = Array.from({ length: inputs }).map((_, index) => {
+  const leadInputs = Array.from({ length: inputs }).map((_, index) => {
     return (
       <div key={index} className="space-x-1">
-        <Input name={`to.${index}`} onKeyDown={handleTropeInputKeyDown} placeholder="id" />
+        <Input name={`to.${index}`} onKeyDown={handleLeadInputKeyDown} placeholder="id" />
         <Input
           name={`to_desc.${index}`}
-          onKeyDown={handleTropeInputKeyDown}
+          onKeyDown={handleLeadInputKeyDown}
           placeholder="description"
           className="w-52"
         />
@@ -113,11 +113,11 @@ export function AddCard({ fromInput, setFromInput }: Props) {
   return (
     <form onSubmit={handleSubmit} className="p-2 flex space-x-4">
       <fieldset className="border px-2 pt-2 pb-4">
-        <legend className="px-1">Investigate new trope</legend>
+        <legend className="px-1">Investigate new lead</legend>
 
         <div className="space-y-3">
           <fieldset className="space-y-1">
-            <legend className="text-sm">Trope</legend>
+            <legend className="text-sm">Lead</legend>
             <div className="flex flex-col space-y-1">
               <Input
                 ref={fromRef}
@@ -143,7 +143,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
                 +1
               </button>
             </div>
-            {tropeInputs}
+            {leadInputs}
           </fieldset>
 
           <fieldset className="space-x-1.5">

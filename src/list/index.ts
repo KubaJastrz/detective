@@ -1,1 +1,1 @@
-export { TropeList } from './trope-list';
+export { LeadList } from './lead-list';
