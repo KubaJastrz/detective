@@ -40,21 +40,26 @@ function To({
   label?: string;
   onClick: MouseEventHandler;
 }) {
-  const text = children.includes('@') ? children : `#${children}`;
+  const lead = formatLead(children);
   if (label) {
     return (
       <Tooltip label={label}>
         <button type="button" onClick={onClick}>
-          <Em>{text}</Em>
+          <Em>{lead}</Em>
         </button>
       </Tooltip>
     );
   }
-  return <Em>{children}</Em>;
+  return <Em>{lead}</Em>;
 }
 
-function From({ children }: { children: ReactNode }) {
-  return <Em>{children}</Em>;
+function From({ children }: { children: string }) {
+  return <Em>{formatLead(children)}</Em>;
+}
+
+function formatLead(lead: string) {
+  if (lead === 'START' || lead.includes('@')) return lead;
+  return `#${lead}`;
 }
 
 function Em({ children }: { children: ReactNode }) {

@@ -72,14 +72,12 @@ export function AddCard({ fromInput, setFromInput }: Props) {
         const value = ((_value as string) ?? '').trim();
 
         if (id && value) {
-          const description = data.get(`to_desc.${id}`) as string;
+          const description = (data.get(`to_desc.${id}`) || undefined) as string;
 
-          if (description) {
-            return acc.concat({
-              id: value,
-              description,
-            });
-          }
+          return acc.concat({
+            id: value,
+            description,
+          });
         }
         return acc;
       },

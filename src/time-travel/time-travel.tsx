@@ -6,6 +6,13 @@ export function TimeTravel() {
   const canUndo = useAppSelector((state) => state.card.past.length > 0);
   const canRedo = useAppSelector((state) => state.card.future.length > 0);
 
+  const restart = () => {
+    if (window.confirm('Are you sure you want to restart?')) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
   return (
     <fieldset className="flex items-center">
       <button type="button" disabled={!canUndo} onClick={() => actions.card.undo()}>
@@ -42,6 +49,10 @@ export function TimeTravel() {
             d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
           />
         </svg>
+      </button>
+
+      <button type="button" onClick={restart} className="border text-sm rounded px-0.5">
+        Restart
       </button>
     </fieldset>
   );

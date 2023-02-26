@@ -41,7 +41,7 @@ export const cardSlice = createSlice({
       for (const { id, description } of toList) {
         state.leads.push({ from, to: id });
         state.cardsById[id] = {
-          id: id,
+          id,
           description,
           seen: false,
         };

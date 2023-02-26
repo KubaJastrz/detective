@@ -1,4 +1,3 @@
-import { Fragment, ReactNode } from 'react';
 import { useAppSelector } from '../store';
 import { LeadItem } from './lead-item';
 
