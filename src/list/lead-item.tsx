@@ -50,7 +50,11 @@ function To({
       </Tooltip>
     );
   }
-  return <Em>{lead}</Em>;
+  return (
+    <button type="button" onClick={onClick}>
+      <Em>{lead}</Em>
+    </button>
+  );
 }
 
 function From({ children }: { children: string }) {
