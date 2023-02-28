@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         bg: 'hsl(12 100% 4%)',
+        bg2: 'hsl(12 100% 2%)',
         text: 'hsl(12 100% 95%)',
         text2: 'hsl(12 100% 97%)',
       },

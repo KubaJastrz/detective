@@ -990,6 +990,21 @@ fill-range@^7.0.1:
   dependencies:
     to-regex-range "^5.0.1"
 
+focus-trap-react@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/focus-trap-react/-/focus-trap-react-10.1.0.tgz#7cfb5551b32c22b5e8496f8914609f37ec6c072f"
+  integrity sha512-mAUw9lrcZbMz/KZZdU55TuwHp5991hES7z7WKokopzIsRC5cTmbMUXRIhN7ZNPW4Mt7ULAH+gVjm0v4e2kN4/Q==
+  dependencies:
+    focus-trap "^7.3.1"
+    tabbable "^6.1.1"
+
+focus-trap@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-7.3.1.tgz#417c98e5f1ab94e717d31f1bafa2da45dabcd65f"
+  integrity sha512-bX/u4FJ+F0Pp6b/8Q9W8Br/JaLJ7rrhOJAzai9JU8bh4BPdOjEATy4pxHcbBBxFjPN4d1oHy7/KqknEdOetm9w==
+  dependencies:
+    tabbable "^6.1.1"
+
 fraction.js@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
@@ -1460,6 +1475,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+tabbable@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-6.1.1.tgz#40cfead5ed11be49043f04436ef924c8890186a0"
+  integrity sha512-4kl5w+nCB44EVRdO0g/UGoOp3vlwgycUVtkk/7DPyeLZUCuNFFKCFG6/t/DgHLrUPHjrZg6s5tNm+56Q2B0xyg==
 
 tailwindcss@3.2.7:
   version "3.2.7"

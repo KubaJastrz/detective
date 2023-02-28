@@ -5,6 +5,7 @@ import { AddCard } from './add';
 import { TimeTravel } from './time-travel';
 import { ReactNode, useState } from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
+import FocusTrap from 'focus-trap-react';
 
 function Providers({ children }: { children: ReactNode }) {
   return (
@@ -19,8 +20,12 @@ export function App() {
 
   return (
     <Providers>
-      <AddCard fromInput={fromInput} setFromInput={setFromInput} />
-      <LeadList focusNewLead={setFromInput} />
+      <FocusTrap>
+        <div>
+        <AddCard fromInput={fromInput} setFromInput={setFromInput} />
+        <LeadList focusNewLead={setFromInput} />
+        </div>
+      </FocusTrap>
       <aside className="fixed bottom-2 left-1">
         <TimeTravel />
       </aside>

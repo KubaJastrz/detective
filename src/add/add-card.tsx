@@ -159,6 +159,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
         ref={submitRef}
         type="submit"
         className="font-mono font-semibold uppercase tracking-wide"
+        tabIndex={-1}
       >
         Save
       </button>

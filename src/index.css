@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  [data-reach-tooltip] {
+    background: theme('colors.bg2') !important;
+    color: theme('colors.orange.50') !important;
+    border-color: theme('colors.bg') !important;
+  }
+}
