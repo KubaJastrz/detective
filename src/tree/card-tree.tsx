@@ -78,7 +78,7 @@ export function CardTree({ data = example, screenWidth }: Props) {
 }
 
 function Link({ link }: { link: HierarchyPointLink<TreeNode> }) {
-  return <VisxLink data={link} className="fill-none stroke-slate-900 opacity-40 stroke-2" />;
+  return <VisxLink data={link} className="fill-none stroke-slate-900 stroke-2 opacity-40" />;
 }
 
 function getTreeDepth(tree: TreeNode) {

@@ -28,7 +28,7 @@ function RootCard({ node }: { node: HierarchyPointNode<TreeNode> }) {
       <Text
         verticalAnchor="middle"
         textAnchor="middle"
-        className="font-semibold tracking-wide pointer-events-none fill-current select-none"
+        className="pointer-events-none select-none fill-current font-semibold tracking-wide"
       >
         {name}
       </Text>
@@ -63,7 +63,7 @@ function ChildCard({ node }: { node: HierarchyPointNode<TreeNode> }) {
       <Text
         verticalAnchor="middle"
         textAnchor="middle"
-        className="text-base pointer-events-none fill-current font-mono font-bold tracking-wide select-none"
+        className="pointer-events-none select-none fill-current font-mono text-base font-bold tracking-wide"
       >
         {number}
       </Text>

@@ -22,7 +22,7 @@ export function TimeTravel() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="h-6 w-6"
         >
           <path
             strokeLinecap="round"
@@ -41,7 +41,7 @@ export function TimeTravel() {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="h-6 w-6"
         >
           <path
             strokeLinecap="round"
@@ -51,7 +51,7 @@ export function TimeTravel() {
         </svg>
       </button>
 
-      <button type="button" onClick={restart} className="border text-sm rounded px-0.5">
+      <button type="button" onClick={restart} className="rounded border px-0.5 text-sm">
         Restart
       </button>
     </fieldset>

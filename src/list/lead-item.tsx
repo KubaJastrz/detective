@@ -18,7 +18,7 @@ export function LeadItem({ lead, focusNewLead }: Props) {
   );
 
   return (
-    <li className="list-disc list-inside">
+    <li className="list-inside list-disc">
       <To onClick={() => focusNewLead(to)} label={description}>
         {to}
       </To>{' '}
@@ -67,5 +67,5 @@ function formatLead(lead: string) {
 }
 
 function Em({ children }: { children: ReactNode }) {
-  return <em className="not-italic font-semibold font-mono tracking-wide text-lg">{children}</em>;
+  return <em className="font-mono text-lg font-semibold not-italic tracking-wide">{children}</em>;
 }

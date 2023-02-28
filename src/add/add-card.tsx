@@ -107,7 +107,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
   });
 
   return (
-    <form onSubmit={handleSubmit} className="p-2 flex space-x-4">
+    <form onSubmit={handleSubmit} className="flex space-x-4 p-2">
       <fieldset className="border px-2 pt-2 pb-4">
         <legend className="px-1">Investigate new lead</legend>
 
@@ -127,13 +127,13 @@ export function AddCard({ fromInput, setFromInput }: Props) {
             </div>
           </fieldset>
 
-          <fieldset className="space-y-1 flex flex-col items-start">
-            <div className="self-stretch flex items-center justify-between">
+          <fieldset className="flex flex-col items-start space-y-1">
+            <div className="flex items-center justify-between self-stretch">
               <legend className="text-sm">Leading to…</legend>
               <button
                 onClick={() => addMore()}
                 type="button"
-                className="text-sm font-mono tracking-wide font-bold"
+                className="font-mono text-sm font-bold tracking-wide"
                 tabIndex={-1}
               >
                 +1
@@ -143,7 +143,13 @@ export function AddCard({ fromInput, setFromInput }: Props) {
           </fieldset>
 
           <fieldset className="space-x-1.5">
-            <input type="checkbox" id="seen" name="seen" defaultChecked />
+            <input
+              type="checkbox"
+              id="seen"
+              name="seen"
+              defaultChecked
+              className="accent-orange-300"
+            />
             <label htmlFor="seen">Mark as seen</label>
           </fieldset>
         </div>
@@ -152,7 +158,7 @@ export function AddCard({ fromInput, setFromInput }: Props) {
       <button
         ref={submitRef}
         type="submit"
-        className="uppercase font-mono tracking-wide font-semibold"
+        className="font-mono font-semibold uppercase tracking-wide"
       >
         Save
       </button>
@@ -165,6 +171,6 @@ const Input = forwardRef<HTMLInputElement, ComponentProps<'input'>>((props, ref)
     ref={ref}
     type="text"
     {...props}
-    className={clsx('text-slate-900 px-1 w-40', props.className)}
+    className={clsx('w-40 bg-text2 px-1 text-bg', props.className)}
   />
 ));
